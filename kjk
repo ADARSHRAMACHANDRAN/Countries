@@ -1,0 +1,21 @@
+var select = document.querySelector('#countrySelector');
+fetch(`https://restcountries.com/v2/all`).then(res => res.json()).then(countries => {
+  console.log(countries);
+  listCountries(countries);
+});
+
+function listCountries(countries) {
+  countries.forEach(country => {
+    let opt = document.createElement('option');
+    opt.text = country.name;
+    opt.value = country.name;
+    select.append(opt);
+  })
+}
+
+function selectCountry() {
+  let selectedCountry = document.querySelector('#countrySelector').value;
+  fetch(`https://restcountries.com/v2/name/${selectedCountry}?fullText=true`).then(res => res.json()).then(cntry => {
+    populateValues(cntry)
+  })
+}
